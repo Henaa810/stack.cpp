@@ -1,0 +1,66 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main()
+{
+    string postfix;
+    stack<int> s;
+
+    cout << "Enter postfix expression: ";
+    cin >> postfix;
+
+    for(int i = 0; i < postfix.length(); i++)
+    {
+        char ch = postfix[i];
+
+        // If operand
+        if(ch >= '0' && ch <= '9')
+        {
+            s.push(ch - '0');
+        }
+
+        // If operator
+        else
+        {
+            int b = s.top();
+            s.pop();
+
+            int a = s.top();
+            s.pop();
+
+            int result;
+
+            switch(ch)
+            {
+                case '+':
+                    result = a + b;
+                    break;
+
+                case '-':
+                    result = a - b;
+                    break;
+
+                case '*':
+                    result = a * b;
+                    break;
+
+                case '/':
+                    result = a / b;
+                    break;
+
+                case '^':
+                    result = 1;
+                    for(int j = 0; j < b; j++)
+                        result = result * a;
+                    break;
+            }
+
+            s.push(result);
+        }
+    }
+
+    cout << "Result = " << s.top();
+
+    return 0;
+}
